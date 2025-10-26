@@ -1,4 +1,4 @@
-import { listPokemon } from '@/config/api_path'
+import { listPokemon, pokemonDetail } from '@/config/api_path'
 import { Pokemon } from '@/model/pokemon'
 import apiClient from '@/network/api_client'
 
@@ -9,5 +9,10 @@ export const PokeRepository = {
     })
 
     return response.data.results.map((item) => new Pokemon(item))
+  },
+
+  async getPokemonDetail(pokemonName) {
+    const response = await apiClient.get(pokemonDetail(pokemonName))
+    return response.data
   },
 }

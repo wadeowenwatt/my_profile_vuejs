@@ -7,6 +7,6 @@ export class Pokemon {
   getImageUrl() {
     const match = this.url.match(/\/pokemon\/(\d+)\//)
     const index = match ? Number(match[1]) : null
-    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${index}.png`
+    return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${index}.svg`
   }
 }
