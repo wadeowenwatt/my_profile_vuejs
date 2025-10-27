@@ -3,9 +3,13 @@ import { PokeRepository } from '@/repository/poke_repository'
 import { onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+// defineProps({
+//   pokemonName: String,
+// })
+
 const route = useRoute()
-const router = useRouter()
 let pokemonName = route.params.pokeName
+const router = useRouter()
 
 onMounted(() => {
   getDetailPokemon()
@@ -35,6 +39,7 @@ const getDetailPokemon = async () => {
 
 <template>
   <h1>Poke Detail Page</h1>
+  <h2>{{ pokeName }}</h2>
   <button @click="testNextPokemon">Test next</button>
 </template>
 

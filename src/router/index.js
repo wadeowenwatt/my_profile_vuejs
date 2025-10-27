@@ -8,8 +8,16 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      // redirect: '/pokeDex'
+      redirect: {
+        name: 'PokeDex'
+      },
+    },
+    {
+      path: '/pokeDex',
       name: 'PokeDex',
       component: HomePage,
+      // alias: ['/poke2', '/poke3']
       // Uncomment for test nested routes
       // children: [
       //   {
@@ -23,6 +31,9 @@ const router = createRouter({
       path: '/pokemon/:pokeName',
       name: 'PokemonDetails',
       component: PokeDetailPage,
+      props: (route) => ({
+        pokemonName: route.params.pokeName,
+      })
     },
     {
       path: '/:pathMatch(.*)*',
