@@ -10,7 +10,7 @@ const router = createRouter({
       path: '/',
       // redirect: '/pokeDex'
       redirect: {
-        name: 'PokeDex'
+        name: 'PokeDex',
       },
     },
     {
@@ -31,9 +31,6 @@ const router = createRouter({
       path: '/pokemon/:pokeName',
       name: 'PokemonDetails',
       component: PokeDetailPage,
-      props: (route) => ({
-        pokemonName: route.params.pokeName,
-      })
     },
     {
       path: '/:pathMatch(.*)*',

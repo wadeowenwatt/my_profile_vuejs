@@ -1,27 +1,11 @@
 <script setup>
 import { PokeRepository } from '@/repository/poke_repository'
-import { onMounted, watch } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { colors } from '@/config/app_const'
 
-// defineProps({
-//   pokemonName: String,
-// })
-
-const poke = {
-  name: 'Charmander',
-  number: '004',
-  type: 'Fire',
-  height: '0.6 m',
-  weight: '8.5 kg',
-  stats: [
-    { name: 'HP', value: 45 },
-    { name: 'Attack', value: 60 },
-    { name: 'Defense', value: 48 },
-    { name: 'Sp. Atk', value: 65 },
-    { name: 'Sp. Def', value: 50 },
-    { name: 'Speed', value: 45 },
-  ],
-}
+const pokemonDetail = ref()
+const isLoading = ref(false)
 
 const route = useRoute()
 let pokemonName = route.params.pokeName
@@ -39,98 +23,88 @@ watch(
   },
 )
 
-const testNextPokemon = () => {
-  router.push({ name: 'PokemonDetails', params: { pokeName: 'bulbasaur' } })
-}
-
 const getDetailPokemon = async () => {
+  isLoading.value = true
   try {
-    const pokemonDetail = await PokeRepository.getPokemonDetail(pokemonName)
-    console.log(pokemonDetail)
+    pokemonDetail.value = await PokeRepository.getPokemonDetail(pokemonName)
+    isLoading.value = false
+    for (const key in pokemonDetail.value.stats) {
+      formattedStats.value[labelMap[key]] = pokemonDetail.value.stats[key]
+    }
   } catch (error) {
     console.log(error)
   }
+}
+
+// Chuyển đổi key từ camelCase → tên hiển thị
+const labelMap = {
+  hp: 'HP',
+  attack: 'Attack',
+  defense: 'Defense',
+  specialAttack: 'Sp. Attack',
+  specialDefense: 'Sp. Defense',
+  speed: 'Speed',
+}
+
+const formattedStats = ref({})
+
+const getBarColor = (value) => {
+  if (value < 50) return '#f77c7c' // đỏ nhạt
+  if (value < 70) return '#f6c85f' // vàng
+  return '#58d68d' // xanh lá
+}
+
+const testNextPokemon = () => {
+  router.push({ name: 'PokemonDetails', params: { pokeName: 'bulbasaur' } })
 }
 </script>
 
 <template>
   <div class="pokedex-page">
-    <div class="container">
+    <div v-if="isLoading" class="container">
+      <h1>Loading...</h1>
+    </div>
+    <div v-else class="container">
       <!-- Big image LEFT -->
-      <div class="visual">
-        <div class="visual-bg">
-          <img
-            class="poke-image"
-            src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png"
-          />
+      <div class="pokemon-card">
+        <h2 class="pokemon-name" :style="{ color: colors[pokemonDetail?.type[0]] }">
+          {{ pokemonName.toUpperCase() }}
+        </h2>
+        <span class="pokemon-id">#{{ pokemonDetail?.id }}</span>
+        <div class="type-badge" :style="{ backgroundColor: colors[pokemonDetail?.type[0]] }">
+          {{ pokemonDetail?.type[0] }}
         </div>
+        <img class="poke-image" :src="`${pokemonDetail?.getImageUrl()}`" />
       </div>
 
       <!-- RIGHT -->
       <div class="info">
-        <!-- Header: back + name + number -->
-        <div class="info-header">
-          <button class="back" aria-label="Back">←</button>
-          <div class="title-wrap">
-            <h1 class="poke-name">{{ poke.name }}</h1>
-            <div class="poke-number">#{{ poke.number }}</div>
-          </div>
-          <div class="type-badge">{{ poke.type }}</div>
-        </div>
+        <h3 class="stats-title" :style="{ color: colors[pokemonDetail?.type[0]] }">Stats</h3>
 
-        <!-- Small meta cards: Height & Weight -->
-        <div class="meta-cards">
-          <div class="meta-card">
-            <div class="meta-label">Height</div>
-            <div class="meta-value">{{ poke.height }}</div>
-          </div>
-          <div class="meta-card">
-            <div class="meta-label">Weight</div>
-            <div class="meta-value">{{ poke.weight }}</div>
-          </div>
-        </div>
+        <div v-for="(value, key) in formattedStats" :key="key" class="stat-item">
+          <span class="stat-name">{{ key }}</span>
+          <span class="stat-value">{{ value }}</span>
 
-        <div class="stats">
-          <h3 class="stats-title">Stats</h3>
-          <ul class="stats-list">
-            <li v-for="(s, i) in poke.stats" :key="i" class="stat-row">
-              <div class="stat-name">{{ s.name }}</div>
-              <div
-                class="stat-bar-wrap"
-                :aria-valuenow="s.value"
-                role="progressbar"
-                :aria-label="`${s.name} ${s.value}`"
-              >
-                <div class="stat-bar" :style="{ width: `${Math.min(s.value, 100)}%` }"></div>
-              </div>
-              <div class="stat-value">{{ s.value }}</div>
-            </li>
-          </ul>
+          <div class="stat-bar">
+            <div
+              class="stat-bar-fill"
+              :style="{
+                width: value + '%',
+                backgroundColor: getBarColor(value),
+              }"
+            ></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <h2>{{ pokeName }}</h2>
-  <button @click="testNextPokemon">Test next</button>
+  <!-- <button @click="testNextPokemon">Test next</button> -->
 </template>
 
 <style scoped>
-/* --- Root sizing --- */
-:root {
-  --max-width: 1200px;
-  --gap: 1.25rem; /* 20px if root 16px */
-  --card-radius: 12px;
-  --soft-shadow: 0 6px 18px rgba(20, 20, 40, 0.06);
-  --accent: #ff9a3c; /* fire-like accent */
-  --muted: #8a8a8a;
-  --bg: linear-gradient(180deg, rgba(255, 245, 238, 0.7), rgba(255, 250, 250, 0.5));
-}
-
 /* page center */
 .pokedex-page {
-  padding: 2rem 1rem;
-  background: #fff;
-  min-height: 100vh;
+  padding: 64px;
 }
 
 /* container grid: left big visual, right info */
@@ -142,40 +116,16 @@ const getDetailPokemon = async () => {
   gap: var(--gap);
   align-items: start;
 }
-
-/* Visual left */
-.visual {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-/* soft rounded background behind the image */
-.visual-bg {
-  width: 100%;
-  min-height: 420px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  background: radial-gradient(closest-side, rgba(255, 200, 150, 0.12), rgba(255, 240, 230, 0.02));
-  box-shadow: var(--soft-shadow);
-  padding: 2rem;
-  box-sizing: border-box;
-}
-
 /* image scales responsively */
 .poke-image {
   max-width: 100%;
   max-height: 560px;
   object-fit: contain;
   transform-origin: center;
-  /* subtle entrance */
-  transition: transform 0.25s ease;
 }
+
 .poke-image:hover {
-  transform: scale(1.02);
+  transform: scale(1.05);
 }
 
 /* Right column: info */
@@ -192,15 +142,6 @@ const getDetailPokemon = async () => {
   gap: 1rem;
 }
 
-/* back button */
-.back {
-  background: transparent;
-  border: none;
-  font-size: 1.25rem;
-  cursor: pointer;
-  color: var(--muted);
-}
-
 /* title and number */
 .title-wrap {
   display: flex;
@@ -208,127 +149,95 @@ const getDetailPokemon = async () => {
   gap: 0.125rem;
   flex: 1;
 }
-.poke-name {
-  margin: 0;
-  font-size: 1.75rem; /* 28px */
-  font-weight: 700;
-}
-.poke-number {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
 /* type badge aligned to right of header */
 .type-badge {
-  background: linear-gradient(180deg, #ffb36b, #ff7b3c);
-  color: white;
-  padding: 0.35rem 0.8rem;
+  color: black;
+  padding: 10px 16px;
+  padding-bottom: 12px;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 16px;
   align-self: flex-start;
+  text-align: center;
   box-shadow: 0 6px 12px rgba(255, 120, 40, 0.12);
 }
 
-/* meta cards (height + weight) */
-.meta-cards {
+.pokemon-card {
   display: flex;
-  gap: 0.75rem;
-  align-items: center;
-}
-.meta-card {
-  background: #fff;
-  border-radius: var(--card-radius);
-  padding: 0.85rem 1rem;
-  min-width: 120px;
-  box-shadow: var(--soft-shadow);
-  display: flex;
+  width: 500px;
   flex-direction: column;
-  gap: 0.25rem;
-}
-.meta-label {
-  font-size: 0.8rem;
-  color: var(--muted);
-}
-.meta-value {
-  font-weight: 700;
-  font-size: 1.05rem;
+  align-items: left;
+  font-family: sans-serif;
 }
 
-/* Stats area */
-.stats {
-  margin-top: 0.5rem;
+.pokemon-header {
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: 8px;
 }
+
+.pokemon-name {
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.pokemon-id {
+  color: #999;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.pokemon-type {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+}
+
 .stats-title {
-  margin: 0 0 0.5rem 0;
-  font-size: 1rem;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
 }
-.stats-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
+
+.stat-item {
   display: grid;
-  gap: 0.6rem;
-}
-.stat-row {
-  display: grid;
-  grid-template-columns: 90px 1fr 40px;
-  gap: 0.6rem;
+  grid-template-columns: 110px 40px 1fr;
   align-items: center;
-}
-.stat-name {
+  margin-bottom: 10px;
   font-size: 0.9rem;
-  color: var(--muted);
 }
-.stat-bar-wrap {
-  height: 10px;
-  background: #f0f0f0;
-  border-radius: 999px;
+
+.stat-name {
+  color: #999;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.stat-value {
+  font-weight: 600;
+  text-align: right;
+  color: #daa4a4;
+  padding-right: 10px;
+}
+
+.stat-bar {
+  height: 6px;
+  background-color: #e5e5e5;
+  border-radius: 3px;
   overflow: hidden;
 }
-.stat-bar {
+
+.stat-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, rgba(255, 150, 70, 0.95), rgba(255, 110, 30, 0.95));
-  transition: width 0.5s ease;
-}
-.stat-value {
-  text-align: right;
-  font-weight: 600;
-  color: #222;
-}
-
-/* Responsive: stack columns on small screens */
-@media (max-width: 900px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
-  .info {
-    order: 2;
-  }
-  .visual {
-    order: 1;
-  }
-  .meta-cards {
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-}
-
-/* Very small screens: tighten sizes */
-@media (max-width: 420px) {
-  .poke-name {
-    font-size: 1.25rem;
-  }
-  .type-badge {
-    font-size: 0.8rem;
-    padding: 0.25rem 0.6rem;
-  }
-  .meta-card {
-    padding: 0.6rem 0.75rem;
-    min-width: 100px;
-  }
-  .stat-row {
-    grid-template-columns: 75px 1fr 36px;
-  }
+  border-radius: 3px;
+  transition: width 0.3s ease;
 }
 </style>

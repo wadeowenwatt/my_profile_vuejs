@@ -1,15 +1,10 @@
 export class PokemonDetail {
-  constructor({ id, type, height, weight, hp, attack, defense, specialAttack, specialDefense, speed }) {
+  constructor({ id, type, height, weight, stats }) {
     this.id = id
     this.type = type
     this.height = height
     this.weight = weight
-    this.hp = hp
-    this.attack = attack
-    this.defense = defense
-    this.specialAttack = specialAttack
-    this.specialDefense = specialDefense
-    this.speed = speed
+    this.stats = stats
   }
 
   getImageUrl() {
