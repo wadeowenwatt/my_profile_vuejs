@@ -9,7 +9,9 @@ export const PokeRepository = {
       params: { limit, offset },
     })
 
-    return response.data.results.map((item) => new Pokemon(item))
+    const items = response.data.results.map((item) => new Pokemon(item))
+    // return items plus total count so callers can implement pagination
+    return { items, count: response.data.count }
   },
 
   async getPokemonDetail(pokemonName) {

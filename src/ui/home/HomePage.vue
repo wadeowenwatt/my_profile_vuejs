@@ -7,18 +7,50 @@ import { useThemeStore } from '@/stores/theme_store'
 const pokemons = ref([])
 const router = useRouter()
 
+// pagination
+const limit = 20
+const offset = ref(0)
+const totalCount = ref(null)
+const isLoading = ref(false)
+
 // theme store
 const themeStore = useThemeStore()
 const toggleTheme = () => themeStore.toggle()
 const isDark = computed(() => themeStore.isDark)
 
-onMounted(async () => {
+const loadPokemons = async () => {
+  if (isLoading.value) return
+  isLoading.value = true
   try {
-    pokemons.value = await PokeRepository.getListPokemon()
+    const res = await PokeRepository.getListPokemon(limit, offset.value)
+    // repository now returns { items, count }
+    const items = res.items || []
+    const count = res.count ?? null
+    if (offset.value === 0) {
+      pokemons.value = items
+    } else {
+      pokemons.value = pokemons.value.concat(items)
+    }
+    offset.value += items.length
+    if (count !== null) totalCount.value = count
   } catch (error) {
-    console.log(error)
+    console.error('Failed to load pokemons', error)
+  } finally {
+    isLoading.value = false
   }
+}
+
+onMounted(loadPokemons)
+
+const hasMore = computed(() => {
+  if (totalCount.value === null) return true
+  return pokemons.value.length < totalCount.value
 })
+
+const loadMore = async () => {
+  if (!hasMore.value || isLoading.value) return
+  await loadPokemons()
+}
 
 const goToPokemonDetail = (pokemonName) => {
   router.push({ name: 'PokemonDetails', params: { pokeName: pokemonName } })
@@ -45,12 +77,12 @@ const formatName = (name) => {
     {{ isDark ? '☀️' : '🌙' }}
   </button>
   <!-- Un-comment for test nested routes -->
-  <!-- <router-view></router-view> -->
+  <router-view> </router-view>
   <div class="poke-container">
     <div
       class="pokemon"
       v-for="(pokemon, index) in pokemons"
-      :key="index"
+      :key="pokemon.name || index"
       @click="goToPokemonDetail(pokemon.name)"
     >
       <div class="img-container">
@@ -58,6 +90,13 @@ const formatName = (name) => {
       </div>
       <h2>{{ formatName(pokemon.name) }}</h2>
     </div>
+  </div>
+  <div class="load-more-wrap">
+    <button class="load-more" @click="loadMore" :disabled="!hasMore || isLoading">
+      <span v-if="isLoading">Loading...</span>
+      <span v-else-if="!hasMore">No more</span>
+      <span v-else>Load more</span>
+    </button>
   </div>
 </template>
 
@@ -130,5 +169,26 @@ const formatName = (name) => {
   color: var(--text-primary);
   box-shadow: var(--box-shadow);
   cursor: pointer;
+}
+
+.load-more-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 24px 0 48px;
+}
+
+.load-more {
+  background: var(--card-bg);
+  color: var(--text-primary);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: var(--box-shadow);
+}
+
+.load-more[disabled] {
+  opacity: 0.6;
+  cursor: default;
 }
 </style>

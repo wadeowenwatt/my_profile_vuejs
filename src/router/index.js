@@ -19,13 +19,13 @@ const router = createRouter({
       component: HomePage,
       // alias: ['/poke2', '/poke3']
       // Uncomment for test nested routes
-      // children: [
-      //   {
-      //     path: 'pokemon/:pokeName',
-      //     name: 'PokemonDetails',
-      //     component: PokeDetailPage,
-      //   },
-      // ],
+      children: [
+        {
+          path: 'pokemon/:pokeName',
+          name: 'PokemonDetails',
+          component: PokeDetailPage,
+        },
+      ],
     },
     {
       path: '/pokemon/:pokeName',

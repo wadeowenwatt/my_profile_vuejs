@@ -19,7 +19,7 @@ export const useThemeStore = defineStore('theme', () => {
     try {
       localStorage.setItem(STORAGE_KEY, newTheme)
     } catch {
-      // ignore write errors (e.g. private mode)
+      console.log('Failed to save theme to localStorage')
     }
   }
 
