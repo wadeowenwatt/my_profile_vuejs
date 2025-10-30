@@ -138,7 +138,7 @@ const testNextPokemon = () => {
 }
 
 .poke-image:hover {
-  transform: scale(1.05);
+  transform: scale(1.3);
 }
 
 /* Right column: info */
