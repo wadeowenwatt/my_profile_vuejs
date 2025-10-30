@@ -1,10 +1,16 @@
 <script setup>
 import { PokeRepository } from '@/repository/poke_repository'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useThemeStore } from '@/stores/theme_store'
 
 const pokemons = ref([])
 const router = useRouter()
+
+// theme store
+const themeStore = useThemeStore()
+const toggleTheme = () => themeStore.toggle()
+const isDark = computed(() => themeStore.isDark)
 
 onMounted(async () => {
   try {
@@ -31,6 +37,13 @@ const formatName = (name) => {
       class="pokemon-logo"
     />
   </div>
+  <button
+    class="theme-toggle"
+    @click="toggleTheme"
+    :title="isDark ? 'Switch to light' : 'Switch to dark'"
+  >
+    {{ isDark ? '☀️' : '🌙' }}
+  </button>
   <!-- Un-comment for test nested routes -->
   <!-- <router-view></router-view> -->
   <div class="poke-container">
@@ -74,14 +87,14 @@ const formatName = (name) => {
   height: 180px;
   width: 160px;
   margin: 8px;
-  background-color: rgb(54, 54, 54);
-  background: linear-gradient(to bottom, rgb(43, 42, 42), rgb(27, 27, 27));
+  background-color: var(--card-bg);
+  background: linear-gradient(to bottom, var(--card-grad-start), var(--card-grad-end));
   border-radius: 10px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--box-shadow);
   margin: 10px;
   padding: 24px;
   text-align: center;
-  color: #f1f1f1;
+  color: var(--text-primary);
 }
 
 .pokemon .img-container {
@@ -97,7 +110,25 @@ const formatName = (name) => {
 }
 
 .pokemon:hover {
-  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1200;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow: var(--box-shadow);
   cursor: pointer;
 }
 </style>

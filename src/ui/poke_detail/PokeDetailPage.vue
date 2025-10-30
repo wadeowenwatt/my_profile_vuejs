@@ -1,8 +1,9 @@
 <script setup>
 import { PokeRepository } from '@/repository/poke_repository'
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, ref, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { colors } from '@/config/app_const'
+import { useThemeStore } from '@/stores/theme_store'
 
 const pokemonDetail = ref()
 const isLoading = ref(false)
@@ -10,6 +11,11 @@ const isLoading = ref(false)
 const route = useRoute()
 let pokemonName = route.params.pokeName
 const router = useRouter()
+
+// theme store
+const themeStore = useThemeStore()
+const toggleTheme = () => themeStore.toggle()
+const isDark = computed(() => themeStore.isDark)
 
 onMounted(() => {
   getDetailPokemon()
@@ -61,6 +67,13 @@ const testNextPokemon = () => {
 
 <template>
   <div class="pokedex-page">
+    <button
+      class="theme-toggle"
+      @click="toggleTheme"
+      :title="isDark ? 'Switch to light' : 'Switch to dark'"
+    >
+      {{ isDark ? '☀️' : '🌙' }}
+    </button>
     <div v-if="isLoading" class="container">
       <h1>Loading...</h1>
     </div>
@@ -224,13 +237,13 @@ const testNextPokemon = () => {
 .stat-value {
   font-weight: 600;
   text-align: right;
-  color: #daa4a4;
+  color: var(--stat-value-color);
   padding-right: 10px;
 }
 
 .stat-bar {
   height: 6px;
-  background-color: #e5e5e5;
+  background-color: var(--stat-bar-bg);
   border-radius: 3px;
   overflow: hidden;
 }
@@ -239,5 +252,23 @@ const testNextPokemon = () => {
   height: 100%;
   border-radius: 3px;
   transition: width 0.3s ease;
+}
+
+.theme-toggle {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 1200;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  box-shadow: var(--box-shadow);
+  cursor: pointer;
 }
 </style>
