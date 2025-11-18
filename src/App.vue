@@ -8,6 +8,7 @@
 :root {
   /* light theme (default) */
   --bg: #f7f7fb;
+  --header-footer-bg: #080808;
   --text-primary: #111827;
   --card-bg: #ffffff;
   --card-grad-start: #ffffff;
@@ -16,13 +17,14 @@
   --muted: #666666;
   --stat-bar-bg: #e5e5e5;
   --stat-value-color: #333333;
-  --max-width: 1200px;
+  --max-width: 1500px;
   --gap: 24px;
+  --background-secondary: #1a1a1a;
 }
 
 .theme-dark {
-  --bg: #16141b;
-  --text-primary: #f1f1f1;
+  --bg: #0e0e0e;
+  --text-primary: #c3c3c3;
   --card-bg: rgb(54, 54, 54);
   --card-grad-start: rgb(43, 42, 42);
   --card-grad-end: rgb(27, 27, 27);
