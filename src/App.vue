@@ -17,7 +17,7 @@
   --muted: #666666;
   --stat-bar-bg: #e5e5e5;
   --stat-value-color: #333333;
-  --max-width: 1500px;
+  --max-width: 1600px;
   --gap: 24px;
   --background-secondary: #1a1a1a;
 }

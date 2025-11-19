@@ -2,6 +2,7 @@
   <header class="header">
     <div class="container">
       <img src="@/assets/logo.svg" alt="App Logo" />
+
       <ul class="menu">
         <li class="menu-item">Movies</li>
         <li class="menu-item">TV Shows</li>
@@ -10,6 +11,7 @@
         <li class="menu-item">Awards</li>
         <li class="menu-item">Community</li>
       </ul>
+
       <div class="search-bar">
         <div class="search-category">
           <span>All</span>
@@ -31,14 +33,16 @@
 
         <input type="text" placeholder="Search IMDb" />
         <img src="@/assets/ic_search.svg" alt="Search" />
+      </div>
 
+      <div class="user-actions">
         <div class="icon-text-button">
-          <img src="@/assets/bookmark.svg" alt="bookmark">
+          <img src="@/assets/bookmark.svg" alt="bookmark" />
           <span>Watchlist</span>
         </div>
 
         <div class="icon-text-button">
-          <img src="@/assets/user.svg" alt="user">
+          <img src="@/assets/user.svg" alt="user" />
           <span>User</span>
         </div>
 
@@ -84,6 +88,7 @@
   padding: 0 1rem;
   display: flex;
   align-items: center;
+  gap: 28px;
 }
 
 .menu {
@@ -91,7 +96,7 @@
   display: flex;
   gap: 25px;
   margin: 0;
-  padding: 0px 28px;
+  padding: 0px;
 }
 
 .menu-item {
@@ -124,6 +129,20 @@
 }
 
 .change-language-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.user-actions {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon-text-button {
   display: flex;
   align-items: center;
   gap: 8px;
