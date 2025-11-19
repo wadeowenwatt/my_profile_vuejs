@@ -3,8 +3,8 @@ import { PokeRepository } from '@/repository/poke_repository'
 import { onMounted, ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useThemeStore } from '@/stores/theme_store'
-import AppHeader from '../components/AppHeader.vue'
-import AppFooter from '../components/AppFooter.vue'
+import AppHeader from '../components/app/AppHeader.vue'
+import AppFooter from '../components/app/AppFooter.vue'
 
 const pokemons = ref([])
 const router = useRouter()

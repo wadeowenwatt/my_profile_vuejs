@@ -31,6 +31,36 @@
 
         <input type="text" placeholder="Search IMDb" />
         <img src="@/assets/ic_search.svg" alt="Search" />
+
+        <div class="icon-text-button">
+          <img src="@/assets/bookmark.svg" alt="bookmark">
+          <span>Watchlist</span>
+        </div>
+
+        <div class="icon-text-button">
+          <img src="@/assets/user.svg" alt="user">
+          <span>User</span>
+        </div>
+
+        <div class="change-language-button">
+          <span>EN</span>
+          <svg
+            class="dropdown-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+
+        <img src="@/assets/ic_sun.svg" alt="theme toggle" />
       </div>
     </div>
   </header>
@@ -91,5 +121,12 @@
   display: flex;
   align-items: center;
   gap: 8px;
+}
+
+.change-language-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
 }
 </style>
