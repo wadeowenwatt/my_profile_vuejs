@@ -35,7 +35,7 @@
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
   background: var(--bg);
   color: var(--text-primary);
   margin: 0;
