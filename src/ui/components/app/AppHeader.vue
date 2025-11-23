@@ -1,16 +1,12 @@
 <template>
   <header class="header">
-    <div class="container">
+    <div class="content-container">
       <img src="@/assets/logo.svg" alt="App Logo" />
 
-      <ul class="menu">
-        <li class="menu-item">Movies</li>
-        <li class="menu-item">TV Shows</li>
-        <li class="menu-item">Celebs</li>
-        <li class="menu-item">Watch</li>
-        <li class="menu-item">Awards</li>
-        <li class="menu-item">Community</li>
-      </ul>
+      <div class="menu-btn">
+        <img src="@/assets/hamburger.svg" alt="menu" style="color: white" />
+        <p>Menu</p>
+      </div>
 
       <div class="search-bar">
         <div class="search-category">
@@ -35,18 +31,23 @@
         <img src="@/assets/ic_search.svg" alt="Search" />
       </div>
 
+      <div class="icon-text-button">
+        <img src="@/assets/imdb_pro.svg" alt="IMDb Pro" />
+      </div>
+
+      <div class="divider"></div>
+
       <div class="user-actions">
         <div class="icon-text-button">
-          <img src="@/assets/bookmark.svg" alt="bookmark" />
+          <img src="@/assets/bookmark_plus.svg" alt="bookmark" />
           <span>Watchlist</span>
         </div>
 
         <div class="icon-text-button">
-          <img src="@/assets/user.svg" alt="user" />
-          <span>User</span>
+          <span>Sign in</span>
         </div>
 
-        <div class="change-language-button">
+        <div class="icon-text-button">
           <span>EN</span>
           <svg
             class="dropdown-icon"
@@ -63,8 +64,6 @@
             <polyline points="6 9 12 15 18 9"></polyline>
           </svg>
         </div>
-
-        <img src="@/assets/ic_sun.svg" alt="theme toggle" />
       </div>
     </div>
   </header>
@@ -74,67 +73,85 @@
 
 <style>
 .header {
-  height: 73px;
+  height: 56px;
   position: sticky;
   top: 0;
   background-color: var(--header-footer-bg);
   display: flex;
   align-items: center;
+  font-weight: 600;
 }
 
-.container {
+.content-container {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 1rem;
   display: flex;
   align-items: center;
-  gap: 28px;
+  gap: 16px;
 }
 
-.menu {
-  list-style: none;
+/* menu button */
+.menu-btn {
   display: flex;
-  gap: 25px;
-  margin: 0;
-  padding: 0px;
-}
-
-.menu-item {
-  color: var(--text-primary);
-  cursor: pointer;
-}
-
-.search-bar {
-  max-width: 600px;
-  background-color: var(--background-secondary);
-  display: flex;
+  height: 24px;
   align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.menu-btn:hover {
+  background-color: var(--hover-color);
+  padding: 4px 8px;
+  border-radius: 100px;
+}
+
+/* Search bar */
+.search-bar {
+  width: 660px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: space-between;
   padding: 8px 20px;
   gap: 20px;
   border-radius: 10px;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+}
+
+.search-bar:focus-within {
+  border-color: var(--primary-color);
 }
 
 .search-bar input {
+  width: 100%;
   background: transparent;
   border: none;
   outline: none;
   font-size: 14px;
-  color: var(--text-primary);
+  color: black;
 }
 
 .search-category {
   display: flex;
   align-items: center;
+  color: black;
   gap: 8px;
-}
-
-.change-language-button {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  padding-right: 16px;
+  border-right: 1px solid black;
   cursor: pointer;
 }
 
+/* divider */
+.divider {
+  height: 32px;
+  width: 2px;
+  margin: 0px 8px;
+  background-color: rgba(255, 255, 255, 0.16);
+}
+
+/* User actions list button */
 .user-actions {
   margin-left: auto;
   display: flex;
@@ -143,9 +160,17 @@
 }
 
 .icon-text-button {
+  height: 24px;
   display: flex;
   align-items: center;
   gap: 8px;
   cursor: pointer;
+  padding: 4px 10px;
+}
+
+.icon-text-button:hover {
+  background-color: var(--hover-color);
+  padding: 4px 10px;
+  border-radius: 100px;
 }
 </style>

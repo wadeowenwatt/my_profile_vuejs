@@ -6,38 +6,27 @@
 
 <style>
 :root {
-  /* light theme (default) */
-  --bg: #f7f7fb;
-  --header-footer-bg: #080808;
-  --text-primary: #111827;
-  --card-bg: #ffffff;
-  --card-grad-start: #ffffff;
-  --card-grad-end: #f1f5f9;
+  --bg: black;
+  --primary-color: #f5c518;
+  --header-footer-bg: rgb(18, 18, 18);
+  --text-primary: white;
   --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
   --muted: #666666;
   --stat-bar-bg: #e5e5e5;
   --stat-value-color: #333333;
-  --max-width: 1600px;
+  --max-width: 1280px;
   --gap: 24px;
   --background-secondary: #1a1a1a;
-}
-
-.theme-dark {
-  --bg: #0e0e0e;
-  --text-primary: #c3c3c3;
-  --card-bg: rgb(54, 54, 54);
-  --card-grad-start: rgb(43, 42, 42);
-  --card-grad-end: rgb(27, 27, 27);
-  --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.6);
-  --muted: #999999;
-  --stat-bar-bg: #3b3b3b;
-  --stat-value-color: #daa4a4;
+  --hover-color: rgb(58, 58, 58);
+  --border-color: rgb(31, 31, 31);
 }
 
 body {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
   background: var(--bg);
   color: var(--text-primary);
   margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
 }
 </style>
