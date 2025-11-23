@@ -28,9 +28,10 @@ function onSignInClick() {
 <style>
 /* center content of footer */
 .footer {
-  width: var(--max-width);
+  width: 100%;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
 }
 
