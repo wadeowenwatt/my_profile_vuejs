@@ -79,15 +79,15 @@
   background-color: var(--header-footer-bg);
   display: flex;
   align-items: center;
+  justify-content: center;
   font-weight: 600;
 }
 
 .content-container {
   max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 1rem;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 16px;
 }
 
@@ -113,7 +113,7 @@
   background-color: #ffffff;
   display: flex;
   justify-content: space-between;
-  padding: 8px 20px;
+  padding: 4px 20px;
   gap: 20px;
   border-radius: 10px;
   border: 2px solid transparent;
