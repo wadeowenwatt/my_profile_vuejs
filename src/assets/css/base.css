@@ -1,0 +1,44 @@
+:root {
+  /* Colors */
+  --bg: black;
+  --primary-color: #f5c518;
+  --header-footer-bg: rgb(18, 18, 18);
+  --text-primary: white;
+  --box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  --muted: #666666;
+  --stat-bar-bg: #e5e5e5;
+  --stat-value-color: #333333;
+  --background-secondary: #1a1a1a;
+  --hover-color: rgb(58, 58, 58);
+  --border-color: rgb(31, 31, 31);
+
+  /* Layout */
+  --max-width: 1280px;
+  --gap: 24px;
+
+  /* Spacing */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+
+  /* Font Sizes */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-md: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-xxl: 1.5rem; /* 24px */
+  --font-size-3xl: 2rem; /* 32px */
+}
+
+body {
+  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  margin: 0;
+  font-size: var(--font-size-sm); /* Defaulting to 14px as per original App.vue */
+  font-weight: 500;
+}

@@ -1,16 +1,11 @@
 <script setup>
 import { PokeRepository } from '@/repository/poke_repository'
-import { onMounted, ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
-import { useThemeStore } from '@/stores/theme_store'
+import { onMounted, ref } from 'vue'
+import AppHeader from '../components/app/AppHeader.vue'
+import AppFooter from '../components/app/AppFooter.vue'
+import HeroCarousel from '../components/home/HeroCarousel.vue'
 
 const pokemons = ref([])
-const router = useRouter()
-
-// theme store
-const themeStore = useThemeStore()
-const toggleTheme = () => themeStore.toggle()
-const isDark = computed(() => themeStore.isDark)
 
 onMounted(async () => {
   try {
@@ -19,116 +14,21 @@ onMounted(async () => {
     console.log(error)
   }
 })
-
-const goToPokemonDetail = (pokemonName) => {
-  router.push({ name: 'PokemonDetails', params: { pokeName: pokemonName } })
-}
-
-const formatName = (name) => {
-  return name.charAt(0).toUpperCase() + name.slice(1)
-}
 </script>
 
 <template>
-  <div class="pokemon-logo-container">
-    <img
-      src="https://1000logos.net/wp-content/uploads/2017/05/Pokemon-Logo.png"
-      alt="Pokemon Logo"
-      class="pokemon-logo"
-    />
+  <AppHeader />
+  <HeroCarousel />
+  <div class="home-page">
+    <div class="boxbb"></div>
   </div>
-  <button
-    class="theme-toggle"
-    @click="toggleTheme"
-    :title="isDark ? 'Switch to light' : 'Switch to dark'"
-  >
-    {{ isDark ? '☀️' : '🌙' }}
-  </button>
-  <!-- Un-comment for test nested routes -->
-  <!-- <router-view></router-view> -->
-  <div class="poke-container">
-    <div
-      class="pokemon"
-      v-for="(pokemon, index) in pokemons"
-      :key="index"
-      @click="goToPokemonDetail(pokemon.name)"
-    >
-      <div class="img-container">
-        <img loading="lazy" :src="`${pokemon.getImageUrl()}`" :alt="pokemon.name" />
-      </div>
-      <h2>{{ formatName(pokemon.name) }}</h2>
-    </div>
-  </div>
+  <AppFooter />
 </template>
 
 <style scoped>
-.pokemon-logo-container {
+.boxbb {
+  height: 1000px;
   width: 100%;
-  display: flex;
-  justify-content: center;
-}
-
-.pokemon-logo {
-  width: 15rem;
-  margin-top: -1.5rem;
-  margin-bottom: 2rem;
-}
-
-.poke-container {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-around;
-  margin: 0 auto;
-  max-width: 1200px;
-}
-
-.pokemon {
-  height: 180px;
-  width: 160px;
-  margin: 8px;
-  background-color: var(--card-bg);
-  background: linear-gradient(to bottom, var(--card-grad-start), var(--card-grad-end));
-  border-radius: 10px;
-  box-shadow: var(--box-shadow);
-  margin: 10px;
-  padding: 24px;
-  text-align: center;
-  color: var(--text-primary);
-}
-
-.pokemon .img-container {
-  width: 136px;
-  height: 136px;
-  margin: 0 auto;
-}
-
-.pokemon .img-container img {
-  margin-top: 16px;
-  width: 85%;
-  height: 85%;
-}
-
-.pokemon:hover {
-  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.12);
-  cursor: pointer;
-}
-
-.theme-toggle {
-  position: fixed;
-  top: 12px;
-  right: 12px;
-  z-index: 1200;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  background: var(--card-bg);
-  color: var(--text-primary);
-  box-shadow: var(--box-shadow);
-  cursor: pointer;
+  color: green;
 }
 </style>

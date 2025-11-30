@@ -1,7 +1,7 @@
 <script setup>
 import { PokeRepository } from '@/repository/poke_repository'
 import { onMounted, ref, watch, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { colors } from '@/config/app_const'
 import { useThemeStore } from '@/stores/theme_store'
 
@@ -10,7 +10,6 @@ const isLoading = ref(false)
 
 const route = useRoute()
 let pokemonName = route.params.pokeName
-const router = useRouter()
 
 // theme store
 const themeStore = useThemeStore()
@@ -58,10 +57,6 @@ const getBarColor = (value) => {
   if (value < 50) return '#f77c7c' // đỏ nhạt
   if (value < 70) return '#f6c85f' // vàng
   return '#58d68d' // xanh lá
-}
-
-const testNextPokemon = () => {
-  router.push({ name: 'PokemonDetails', params: { pokeName: 'bulbasaur' } })
 }
 </script>
 
