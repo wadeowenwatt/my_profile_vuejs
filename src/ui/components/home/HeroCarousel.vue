@@ -2,7 +2,6 @@
   <div class="main-container">
     <div class="content-container">
       <div class="hero-container">
-        <!-- <transition name="fade"> -->
         <div class="hero" :key="currentItem.id">
           <img class="hero-image" :src="currentItem.background" />
 
@@ -34,7 +33,6 @@
             </div>
           </div>
         </div>
-        <!-- </transition> -->
       </div>
 
       <div class="up-next-box">
@@ -87,7 +85,7 @@ import { ref, onMounted, onUnmounted, computed } from 'vue'
 const list = ref([
   {
     id: 1,
-    title: 'Stranger Things Season 5 Helohehehehehehehe',
+    title: 'Stranger Things Season 5',
     duration: '1:20',
     background:
       'https://m.media-amazon.com/images/M/MV5BZjJjN2ZjOTAtYjUwZS00Y2M3LWE4Y2MtNDJiZDlhNDg3YmM1XkEyXkFqcGdeQXZ3ZXNsZXk@._V1_QL40_QL75_UX1000_CR0,0,1000,563_.jpg',
@@ -96,32 +94,32 @@ const list = ref([
   },
   {
     id: 2,
-    title: 'We Have Questions',
+    title: 'We Have Questions for the "Stranger Things" Cast',
     duration: '9:34',
     background:
-      'https://m.media-amazon.com/images/M/MV5BZjJjN2ZjOTAtYjUwZS00Y2M3LWE4Y2MtNDJiZDlhNDg3YmM1XkEyXkFqcGdeQXZ3ZXNsZXk@._V1_QL40_QL75_UX1000_CR0,0,1000,563_.jpg',
+      'https://m.media-amazon.com/images/M/MV5BNjU3M2I4ZDUtYWE4Mi00N2NkLWFlMzktMGYzNjc0MzcxNGJhXkEyXkFqcGdeQWZlZGVyaWdh._V1_QL40_QL75_UX1000_CR0,0,1000,563_.jpg',
 
     image:
       'https://m.media-amazon.com/images/M/MV5BNjRiMTA4NWUtNmE0ZC00NGM0LWJhMDUtZWIzMDM5ZDIzNTg3XkEyXkFqcGc@._V1_QL75_UY207_CR13,0,140,207_.jpg',
   },
   {
     id: 3,
-    title: 'GOAT',
+    title: 'Glen Powell Stars in "How to Make a Killing"',
     duration: '2:43',
     background:
-      'https://m.media-amazon.com/images/M/MV5BZjJjN2ZjOTAtYjUwZS00Y2M3LWE4Y2MtNDJiZDlhNDg3YmM1XkEyXkFqcGdeQXZ3ZXNsZXk@._V1_QL40_QL75_UX1000_CR0,0,1000,563_.jpg',
+      'https://m.media-amazon.com/images/M/MV5BMWE4MjVkYjktNTU1Yi00MmVlLTkwMjMtZWU4MTcyMzFjZTNlXkEyXkFqcGc@._CR401,39,2579,1450_QL75_UY563_CR0,0,1000,563_.jpg',
 
     image:
-      'https://m.media-amazon.com/images/M/MV5BNjRiMTA4NWUtNmE0ZC00NGM0LWJhMDUtZWIzMDM5ZDIzNTg3XkEyXkFqcGc@._V1_QL75_UY207_CR13,0,140,207_.jpg',
+      'https://m.media-amazon.com/images/M/MV5BNDM3M2FlYzgtOTk2Yi00NmZmLWJjNTUtYzU4YjE5ZGY3NWY5XkEyXkFqcGc@._V1_QL75_UX280_CR0,0,280,414_.jpg',
   },
   {
     id: 4,
     title: 'The Dutchman',
     duration: '1:54',
     background:
-      'https://m.media-amazon.com/images/M/MV5BZjJjN2ZjOTAtYjUwZS00Y2M3LWE4Y2MtNDJiZDlhNDg3YmM1XkEyXkFqcGdeQXZ3ZXNsZXk@._V1_QL40_QL75_UX1000_CR0,0,1000,563_.jpg',
+      'https://m.media-amazon.com/images/M/MV5BNzIyZjFjNmItYzJiYy00NzFlLThhZWItYzUwZjA4ZDM5ODkyXkEyXkFqcGc@._CR499,446,3947,2220_QL75_UY563_CR0,0,1000,563_.jpg',
     image:
-      'https://m.media-amazon.com/images/M/MV5BNjRiMTA4NWUtNmE0ZC00NGM0LWJhMDUtZWIzMDM5ZDIzNTg3XkEyXkFqcGc@._V1_QL75_UY207_CR13,0,140,207_.jpg',
+      'https://m.media-amazon.com/images/M/MV5BYzJhZTFjYjQtOGRiYS00ZWZjLWJmYTMtYWY0ZDMzMjM5YmY5XkEyXkFqcGc@._V1_QL75_UX280_CR0,0,280,414_.jpg',
   },
 ])
 
@@ -130,12 +128,11 @@ const currentIndex = ref(0)
 const currentItem = computed(() => list.value[currentIndex.value])
 const upNextList = computed(() => list.value.filter((_, i) => i !== currentIndex.value))
 
-// --- Auto Slide ---
 let interval = null
 function startAutoSlide() {
-  // interval = setInterval(() => {
-  //   nextItem()
-  // }, 5000) // tự chuyển mỗi 5 giây
+  interval = setInterval(() => {
+    nextItem()
+  }, 5000)
 }
 
 function nextItem() {
@@ -203,6 +200,8 @@ onUnmounted(() => clearInterval(interval))
   top: 0;
   left: 0;
   border-radius: 8px;
+  mask-image: linear-gradient(to bottom, black 50%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent);
 }
 
 .hero-info {
@@ -298,14 +297,5 @@ onUnmounted(() => clearInterval(interval))
 .play-box {
   gap: 8px;
   align-items: flex-end;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.4s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>
