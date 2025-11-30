@@ -75,6 +75,7 @@
 .header {
   height: 56px;
   position: sticky;
+  z-index: 999;
   top: 0;
   background-color: var(--header-footer-bg);
   display: flex;

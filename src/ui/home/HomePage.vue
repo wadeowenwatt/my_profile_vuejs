@@ -3,6 +3,7 @@ import { PokeRepository } from '@/repository/poke_repository'
 import { onMounted, ref } from 'vue'
 import AppHeader from '../components/app/AppHeader.vue'
 import AppFooter from '../components/app/AppFooter.vue'
+import HeroCarousel from '../components/home/HeroCarousel.vue'
 
 const pokemons = ref([])
 
@@ -17,6 +18,7 @@ onMounted(async () => {
 
 <template>
   <AppHeader />
+  <HeroCarousel />
   <div class="home-page">
     <div class="boxbb"></div>
   </div>
