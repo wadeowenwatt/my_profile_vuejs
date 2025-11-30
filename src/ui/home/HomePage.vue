@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue'
 import AppHeader from '../components/app/AppHeader.vue'
 import AppFooter from '../components/app/AppFooter.vue'
 import HeroCarousel from '../components/home/HeroCarousel.vue'
+import FeaturedToday from '../components/home/FeaturedToday.vue'
 
 const pokemons = ref([])
 
@@ -19,6 +20,7 @@ onMounted(async () => {
 <template>
   <AppHeader />
   <HeroCarousel />
+  <FeaturedToday />
   <div class="home-page">
     <div class="boxbb"></div>
   </div>
@@ -27,8 +29,7 @@ onMounted(async () => {
 
 <style scoped>
 .boxbb {
-  height: 1000px;
+  height: 100px;
   width: 100%;
-  color: green;
 }
 </style>
