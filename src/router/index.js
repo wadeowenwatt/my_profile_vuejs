@@ -10,12 +10,12 @@ const router = createRouter({
       path: '/',
       // redirect: '/pokeDex'
       redirect: {
-        name: 'PokeDex',
+        name: 'HomePage',
       },
     },
     {
-      path: '/pokeDex',
-      name: 'PokeDex',
+      path: '/home',
+      name: 'HomePage',
       component: HomePage,
       // alias: ['/poke2', '/poke3']
       // Uncomment for test nested routes

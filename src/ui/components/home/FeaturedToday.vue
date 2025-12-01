@@ -66,6 +66,11 @@ const config = {
 .slide-item {
 }
 
+.nav-item {
+  background-color: var(--primary-color);
+  --vc-nav-border-radius: 8px;
+}
+
 img {
   border-radius: 8px;
   width: 100%;
